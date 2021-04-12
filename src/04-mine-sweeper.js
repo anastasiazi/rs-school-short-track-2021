@@ -21,8 +21,83 @@
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new Error('Not implemented');
+
+function countMines(i, j, matrix) {
+  let count = 0;
+
+  // bomb!
+  if (matrix[i][j]) {
+    return 1;
+  }
+
+  // left up
+  if (i - 1 >= 0 && j - 1 >= 0) {
+    if (matrix[i - 1][j - 1]) {
+      count++;
+    }
+  }
+
+  // up
+  if (i - 1 >= 0) {
+    if (matrix[i - 1][j]) {
+      count++;
+    }
+  }
+
+  // right up
+  if (i - 1 >= 0 && j + 1 < matrix[i].length - 1) {
+    if (matrix[i - 1][j + 1]) {
+      count++;
+    }
+  }
+
+  // left
+  if (j - 1 >= 0) {
+    if (matrix[i][j - 1]) {
+      count++;
+    }
+  }
+
+  // right
+  if (j + 1 < matrix[i].length - 1) {
+    if (matrix[i][j + 1]) {
+      count++;
+    }
+  }
+
+  // left down
+  if (i + 1 < matrix.length && j - 1 >= 0) {
+    if (matrix[i + 1][j - 1]) {
+      count++;
+    }
+  }
+
+  // down
+  if (i + 1 < matrix.length && j <= matrix.length) {
+    if (matrix[i + 1][j]) {
+      count++;
+    }
+  }
+
+  // right down
+  if (i + 1 < matrix.length && j + 1 < matrix[i].length - 1) {
+    if (matrix[i + 1][j + 1]) {
+      count++;
+    }
+  }
+  return count;
+}
+
+function minesweeper(matrix) {
+  const result = [];
+  for (let i = 0; i < matrix.length; i++) {
+    const resultRow = [];
+    result[i] = resultRow;
+    for (let j = 0; j < matrix[0].length; j++) {
+      resultRow[j] = countMines(i, j, matrix);
+    }
+  }
+  return result;
 }
 
 module.exports = minesweeper;
